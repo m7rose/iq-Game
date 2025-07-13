@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="IQ-Game - test your IQ the best is 2048.">
+    <meta name="author" content="M7R">
+    <meta name="theme-color" content="#1e1e2f">
+    <link rel="shortcut icon" href="IQ.png">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #776e65;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    background: #1e1e2f; 
+    color: #f5f5f5;       
+    
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.head{
+    width: 25rem;
+    height: 9.375rem;
+    margin-top: 2rem;
+}
+
+.new-game{
+    text-decoration: none;
+}
+
+.score{
+    color: white;
+    background-color: #776e65;
+    height: 1.875rem;
+    width: 5.625rem;
+    border-radius: 0.2rem;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title{
+    font-size: 3.75rem;
+    font-weight: bold;
+}
+
+.new-game:hover{
+    cursor: pointer;
+}
+
+.board{
+    height: 25rem;
+    width: 25rem;
+    background: #cdc1b5;
+    border: 0.3125rem solid  #bbada0;
+    border-radius: 0.3125rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile{
+    height: 5.625rem;
+    width: 5.625rem;
+    border: 0.3125rem solid #bbada0;
+    font-size: 3.125rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 500ms all linear;
+}
+
+
+.b2 {
+    background-color: #eee4da;
+    color: #727371;
+}
+
+.b4 {
+    background-color: #ece0ca;
+    color: #727371;
+}
+
+.b8 {
+    background-color: #f4b17a;
+    color: white;
+}
+
+.b16{
+    background-color: #f59575;
+    color: white;
+}
+
+.b32{
+    background-color: #f57c5f;
+    color: white;
+}
+
+.b64{
+    background-color: #f65d3b;
+    color: white;
+}
+
+.b128{
+    background-color: #edce71;
+    color: white;
+}
+
+.b256{
+    background-color: #edcc63;
+    color: white;
+}
+
+.b512{
+    background-color: #edc651;
+    color: white;
+}
+
+.b1024{
+    background-color: #eec744;
+    color: white;
+}
+
+.b2048{
+    background-color: #ecc230;
+    color: white;
+}
+
+.b4096 {
+    background-color: #fe3d3d;
+    color: white;
+}
+
+.b8192 {
+    background-color: #ff2020;
+    color: white;
+}
+
+.footer{
+    width: 25rem;
+    height: 12.5rem;
+    margin-top: 5rem;    
+}
+
+p{
+    font-size: 1.1rem;
+}
+
+.arrow-keys, .key{
+    display: none;
+}
+
+.key{
+    height: 5rem;
+    width: 5rem;
+    border-radius: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    background-color: #bbada0;
+    margin: 0.5rem;
+}
+
+.key img{
+    width: 4.5rem;
+}
+
+#keyup{
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 500px) {
+    :root {
+        font-size: 12px;
+    }
+    .tile{
+        height: 5.75rem;
+        width: 5.75rem;
+    }
+    .arrow-keys, .key{
+        display: flex;
+    }
+    .footer{
+        margin-top: 2rem;
+    }  
+}
+
+@media only screen and (max-width: 400px) {
+    :root {
+        font-size: 10px;
+    }
+    .arrow-keys, .key{
+        display: flex;
+    }
+    .tile{
+        height: 5.65rem;
+        width: 5.65rem;
+    }
+    .footer{
+        margin-top: 2rem;
+    }  
+}
+    </style>
+         
+    <title>IQ-Game</title>
+</head>
+<body>
+    <div id="top" class="container">
+
+        <div class="head">
+            <span class="title">iq-game</span>
+            <span class="score" id="score">Score: 0</span>
+            <br><br>
+
+            <a href="./../2048-Game/index.html" class="new-game score">New Game</a>
+        </div>
+
+        <div class="board" id="board">
+            
+        </div>
+        
+        <div class="key" id="keyup">
+            <img src="./Resources/chevron-up.png" alt="">
+        </div>
+        <div class="arrow-keys">
+            <div class="key" id="keyleft">
+                <img src="./Resources/chevron-left.png" alt="">
+            </div>
+            <div class="key" id="keydown">
+                <img src="./Resources/chevron-down.png" alt="">
+            </div>
+            <div class="key" id="keyright">
+                <img src="./Resources/chevron-right.png" alt="">
+            </div>
+        </div>
+
+        <div class="footer">
+            <p id="howTo"><b>HOW TO PLAY: </b>Use your arrow keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
+            <a href="#top"><b>Start Playing!</b></a>
+            <br><br><br>
+            <p>By M7R </p>
+
+        </div>
+
+    </div>
+    <script>
+        var board;
+var score = 0;
+var rows = 4;
+var columns = 4;
+
+window.onload = function() {
+    setGame();
+}
+
+function setGame() {
+
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            let tile = document.createElement("div");
+            tile.id = r.toString() + "-" + c.toString();
+            let num = board[r][c];
+            updateTile(tile, num);
+            document.getElementById("board").append(tile);
+        }
+    }
+    
+    setTwo();
+    setTwo();
+
+}
+
+function updateTile(tile, num) {
+    tile.innerText = "";
+    tile.classList.value = "";
+    tile.classList.add("tile");
+    if (num > 0) {
+        tile.innerText = num.toString();
+        if (num <= 4096) {
+            tile.classList.add("b"+num.toString());
+        } else {
+            tile.classList.add("b8192");
+        }                
+    }
+}
+
+document.addEventListener('keyup', (e) => {
+    if (e.code == "ArrowLeft") {
+        slideLeft();
+        setTwo();
+    }
+    else if (e.code == "ArrowRight") {
+        slideRight();
+        setTwo();
+    }
+    else if (e.code == "ArrowUp") {
+        slideUp();
+        setTwo();
+
+    }
+    else if (e.code == "ArrowDown") {
+        slideDown();
+        setTwo();
+    }
+    document.getElementById("score").innerText = "Score: " + score;
+})
+
+// For Mobile Devices 
+
+document.getElementById("keyup").addEventListener("click", (e) => {
+    slideUp();
+    setTwo();
+});
+document.getElementById("keydown").addEventListener("click", (e) => {
+    slideDown();
+    setTwo();
+});
+document.getElementById("keyright").addEventListener("click", (e) => {
+    slideRight();
+    setTwo();
+});
+document.getElementById("keyleft").addEventListener("click", (e) => {
+    slideLeft();
+    setTwo();
+});
+
+
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
+
+function filterZero(row){
+    return row.filter(num => num != 0); 
+}
+
+function slide(row) {
+    //[0, 2, 2, 2] 
+    row = filterZero(row); //[2, 2, 2]
+    for (let i = 0; i < row.length-1; i++){
+        if (row[i] == row[i+1]) {
+            row[i] *= 2;
+            row[i+1] = 0;
+            score += row[i];
+        }
+    } 
+    row = filterZero(row); 
+    while (row.length < columns) {
+        row.push(0);
+    } 
+    return row;
+}
+
+function slideLeft() {
+    for (let r = 0; r < rows; r++) {
+        let row = board[r];
+        row = slide(row);
+        board[r] = row;
+        for (let c = 0; c < columns; c++){
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideRight() {
+    for (let r = 0; r < rows; r++) {
+        let row = board[r];       
+        row.reverse();              
+        row = slide(row)            
+        board[r] = row.reverse();   
+        for (let c = 0; c < columns; c++){
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideUp() {
+    for (let c = 0; c < columns; c++) {
+        let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+        row = slide(row);
+        for (let r = 0; r < rows; r++){
+            board[r][c] = row[r];
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideDown() {
+    for (let c = 0; c < columns; c++) {
+        let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+        row.reverse();
+        row = slide(row);
+        row.reverse();
+        for (let r = 0; r < rows; r++){
+            board[r][c] = row[r];
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function setTwo() {
+    if (!hasEmptyTile()) {
+        return;
+    }
+    let found = false;
+    while (!found) {
+        let r = Math.floor(Math.random() * rows);
+        let c = Math.floor(Math.random() * columns);
+        if (board[r][c] == 0) {
+            board[r][c] = 2;
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            tile.innerText = "2";
+            tile.classList.add("b2");
+            found = true;
+        }
+    }
+}
+
+function hasEmptyTile() {
+    let count = 0;
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            if (board[r][c] == 0) { 
+                return true;
+            }
+            
+        }
+    }
+    return false;
+}
+    </script>
+        
+</body>
+</html>
